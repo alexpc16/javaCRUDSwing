@@ -4,6 +4,7 @@
  */
 package com.mycompany.login;
 
+import static com.mycompany.login.BCryptExample.checkPassword;
 import static com.mycompany.login.BCryptExample.hashPassword;
 import static com.mycompany.login.PasswordEncryption.encryptPassword;
 import java.sql.Connection;
@@ -142,18 +143,39 @@ public class LoginVentana extends javax.swing.JFrame {
             Conexion conexion = new Conexion("Login");
             Connection conexionRegistro = conexion.conectar();
             
-            Statement instruccion = conexionRegistro.createStatement();
-            
-            
-            String consultaString = "INSERT INTO usuario(nombre,password) VALUES (?, ?);";
-            
-            PreparedStatement preparedStatement = conexionRegistro.prepareStatement(consultaString);
-            
             String nombreUsuarioNuevo = nombre.getText();
             String passwordNuevo = password.getText();
+            String passwordNuevoEncriptado = hashPassword(passwordNuevo);
             
             
+            String consultaUsuarios = "SELECT password FROM usuario WHERE nombre = ?  ;";
             
+            PreparedStatement buscarUsuario = conexionRegistro.prepareStatement(consultaUsuarios);
+            
+            buscarUsuario.setString(1,nombreUsuarioNuevo);
+            //buscarUsuario.setString(2,passwordNuevoEncriptado);
+            
+            ResultSet resultadoBusqueda = buscarUsuario.executeQuery();
+            
+            
+             if (resultadoBusqueda.next()) { // Mover al primer resultado (si existe)
+                String passwordSys = resultadoBusqueda.getString("password");
+                System.out.println(passwordSys);
+                boolean passwordMatches = checkPassword(passwordNuevo, passwordNuevoEncriptado);
+                System.out.println(passwordMatches);
+                
+               
+                
+                // Establecer el nombre de usuario en el JTextField
+            } else {
+                // No se encontraron resultados
+                System.out.println("No se encontro nada");
+                
+                
+            }
+             
+            String consultaString = "INSERT INTO usuario(nombre,password) VALUES (?, ?);";
+            PreparedStatement preparedStatement = conexionRegistro.prepareStatement(consultaString);
             
             
             //String passwordEncriptado = PasswordEncryption.encryptPassword(passwordNuevo);
@@ -170,7 +192,7 @@ public class LoginVentana extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Registro agregado" + filasInsertadas);
             
             
-            //ResultSet resultadoSQL = instruccion.executeQuery(consultaString);
+            
             
             /*if (resultadoSQL.next()) { // Mover al primer resultado (si existe)
                 String nombreUsuario = resultadoSQL.getString("nombre");
@@ -184,7 +206,9 @@ public class LoginVentana extends javax.swing.JFrame {
             }*/
             
         } catch (SQLException ex) {
-            Logger.getLogger(LoginVentana.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(LoginVentana.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "No se pudo");
+
         }
         
         
