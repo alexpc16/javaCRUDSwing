@@ -34,10 +34,11 @@ class Conexion {
             //Class.forName(driver);
             CX = DriverManager.getConnection(url, user, password);
             
-            JOptionPane.showMessageDialog(null, "Se conectó correctamente a la Base de Datos");
+            //JOptionPane.showMessageDialog(null, "Se conectó correctamente a la Base de Datos");
             
         } catch (SQLException e) {
-            System.out.print(e.toString());
+            //System.out.print(e.toString());
+            JOptionPane.showMessageDialog(null, "No se pudo realizar la conexión");
         }
         return CX;
     }
