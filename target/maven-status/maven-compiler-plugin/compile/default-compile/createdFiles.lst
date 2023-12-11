@@ -1,7 +1,6 @@
 com/mycompany/login/PasswordEncryption.class
 com/mycompany/login/LoginVentana$2.class
 com/mycompany/login/RegistroCalificaciones$4.class
-com/mycompany/login/RegistroCalificaciones.form
 com/mycompany/login/Calificaciones$3.class
 com/mycompany/login/LoginVentana$3.class
 com/mycompany/login/RegistroCalificaciones$3.class
@@ -15,4 +14,3 @@ com/mycompany/login/Conexion.class
 com/mycompany/login/LoginVentana$1.class
 com/mycompany/login/Calificaciones$1.class
 com/mycompany/login/Calificaciones.class
-com/mycompany/login/Calificaciones.form

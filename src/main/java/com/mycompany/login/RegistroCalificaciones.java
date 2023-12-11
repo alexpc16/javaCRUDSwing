@@ -144,7 +144,6 @@ public class RegistroCalificaciones extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
-            // TODO add your handling code here:
             
             Conexion conexion = new Conexion("Login");
             Connection conexionRegistro = conexion.conectar();
