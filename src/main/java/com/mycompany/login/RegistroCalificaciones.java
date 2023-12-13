@@ -41,11 +41,12 @@ public class RegistroCalificaciones extends javax.swing.JFrame {
         nombreCuadro = new javax.swing.JTextField();
         notaCuadro = new javax.swing.JTextField();
         agregarBtn = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        eliminarBtn = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        actualizarBtn = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         proyectoSelect = new javax.swing.JComboBox<>();
+        buscarBtn = new javax.swing.JButton();
 
         setTitle("Notas");
 
@@ -78,7 +79,12 @@ public class RegistroCalificaciones extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("eliminar");
+        eliminarBtn.setText("eliminar");
+        eliminarBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eliminarBtnActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("borrar");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -87,16 +93,23 @@ public class RegistroCalificaciones extends javax.swing.JFrame {
             }
         });
 
-        jButton4.setText("actualizar");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        actualizarBtn.setText("actualizar");
+        actualizarBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                actualizarBtnActionPerformed(evt);
             }
         });
 
         jLabel3.setText("proyecto");
 
         proyectoSelect.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "entregado", "no entregado" }));
+
+        buscarBtn.setText("buscar");
+        buscarBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscarBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -116,17 +129,21 @@ public class RegistroCalificaciones extends javax.swing.JFrame {
                         .addGap(38, 38, 38)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(notaCuadro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(fechaNacCuadro)
-                                .addComponent(nombreCuadro))
-                            .addComponent(proyectoSelect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(proyectoSelect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(fechaNacCuadro)
+                                    .addComponent(nombreCuadro))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(buscarBtn)
+                                .addGap(24, 24, 24))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(27, 27, 27)
-                        .addComponent(jButton2)
+                        .addComponent(eliminarBtn)
                         .addGap(29, 29, 29)
                         .addComponent(jButton3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
-                        .addComponent(jButton4)))
+                        .addComponent(actualizarBtn)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -135,7 +152,8 @@ public class RegistroCalificaciones extends javax.swing.JFrame {
                 .addGap(17, 17, 17)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(nombreCuadro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(nombreCuadro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buscarBtn))
                 .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -151,9 +169,9 @@ public class RegistroCalificaciones extends javax.swing.JFrame {
                 .addGap(44, 44, 44)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(agregarBtn)
-                    .addComponent(jButton2)
+                    .addComponent(eliminarBtn)
                     .addComponent(jButton3)
-                    .addComponent(jButton4))
+                    .addComponent(actualizarBtn))
                 .addContainerGap(49, Short.MAX_VALUE))
         );
 
@@ -161,9 +179,11 @@ public class RegistroCalificaciones extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void agregarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarBtnActionPerformed
+        
+        Conexion conexion = new Conexion("proyFinalJava");
         try {
             
-            Conexion conexion = new Conexion("proyFinalJava");
+            
             Connection conexionRegistro = conexion.conectar();
             
             // accedemos a los cuadros de texto (jtextField) y usamos su metodo get para
@@ -206,6 +226,11 @@ public class RegistroCalificaciones extends javax.swing.JFrame {
             Logger.getLogger(RegistroCalificaciones.class.getName()).log(Level.SEVERE, null, ex);
         }
         
+        finally{
+            conexion.cerrarConexion();
+            System.out.println("cerrada");
+        }
+        
         
         
     }//GEN-LAST:event_agregarBtnActionPerformed
@@ -225,13 +250,129 @@ public class RegistroCalificaciones extends javax.swing.JFrame {
         fechaNacCuadro.setText("");
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void actualizarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualizarBtnActionPerformed
         // TODO add your handling code here:
+        Conexion conexion = new Conexion("proyFinalJava");
+    try {
+        Connection conexionRegistro = conexion.conectar();
+
+        // Acceder a los cuadros de texto para obtener los nuevos valores
+        String nombreUsuarioActualizar = nombreCuadro.getText();
+        String nuevaFechaNac = fechaNacCuadro.getText();
+        String nuevaNota = notaCuadro.getText();
+        String nuevoProyecto = proyectoSelect.getSelectedItem().toString();
+
+        // Crear la consulta SQL para actualizar los datos del usuario por nombre
+        String actualizarRegistroAlumno = "UPDATE alumnos SET fecha_nac = ?, nota = ?, proyecto = ? WHERE nombre = ?;";
+
+        // Realizar la preparación de la consulta
+        PreparedStatement actualizarRegistroSQL = conexionRegistro.prepareStatement(actualizarRegistroAlumno);
+
+        // Establecer los nuevos valores en la consulta
+        actualizarRegistroSQL.setString(1, nuevaFechaNac);
+        actualizarRegistroSQL.setString(2, nuevaNota);
+        actualizarRegistroSQL.setString(3, nuevoProyecto);
+        actualizarRegistroSQL.setString(4, nombreUsuarioActualizar);
+
+        // Ejecutar la consulta para actualizar el registro
+        int filasActualizadas = actualizarRegistroSQL.executeUpdate();
+
+        if (filasActualizadas > 0) {
+            System.out.println("Registro actualizado correctamente");
+        } else {
+            System.out.println("No se encontró ningún registro con el nombre proporcionado");
+        }
+    } catch (SQLException ex) {
+        Logger.getLogger(RegistroCalificaciones.class.getName()).log(Level.SEVERE, null, ex);
+    } finally {
+        conexion.cerrarConexion();
+        System.out.println("Conexión cerrada");
+    }
+        
      
        
 
         
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_actualizarBtnActionPerformed
+
+    private void eliminarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarBtnActionPerformed
+        // TODO add your handling code here:
+         Conexion conexion = new Conexion("proyFinalJava");
+    try {
+        Connection conexionRegistro = conexion.conectar();
+
+        // Acceder al cuadro de texto para obtener el nombre del usuario a eliminar
+        String nombreUsuarioEliminar = nombreCuadro.getText();
+
+        // Crear la consulta SQL para eliminar el registro por nombre
+        String eliminarRegistroAlumno = "DELETE FROM alumnos WHERE nombre = ?;";
+
+        // Realizar la preparación de la consulta
+        PreparedStatement eliminarRegistroSQL = conexionRegistro.prepareStatement(eliminarRegistroAlumno);
+
+        // Establecer el nombre del usuario a eliminar en la consulta
+        eliminarRegistroSQL.setString(1, nombreUsuarioEliminar);
+
+        // Ejecutar la consulta para eliminar el registro
+        int filasEliminadas = eliminarRegistroSQL.executeUpdate();
+
+        if (filasEliminadas > 0) {
+            System.out.println("Registro eliminado correctamente");
+        } else {
+            System.out.println("No se encontró ningún registro con el nombre proporcionado");
+        }
+    } catch (SQLException ex) {
+        Logger.getLogger(RegistroCalificaciones.class.getName()).log(Level.SEVERE, null, ex);
+    } finally {
+        conexion.cerrarConexion();
+        System.out.println("Conexión cerrada");
+    }
+    }//GEN-LAST:event_eliminarBtnActionPerformed
+
+    private void buscarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarBtnActionPerformed
+        // TODO add your handling code here:
+            Conexion conexion = new Conexion("proyFinalJava");
+    try {
+        Connection conexionRegistro = conexion.conectar();
+
+        // Acceder al cuadro de texto para obtener el nombre del usuario a buscar
+        String nombreUsuarioBuscar = nombreCuadro.getText();
+
+        // Crear la consulta SQL para obtener los datos del usuario por nombre
+        String consultarRegistroAlumno = "SELECT * FROM alumnos WHERE nombre = ?;";
+
+        // Realizar la preparación de la consulta
+        PreparedStatement consultarRegistroSQL = conexionRegistro.prepareStatement(consultarRegistroAlumno);
+
+        // Establecer el nombre del usuario a buscar en la consulta
+        consultarRegistroSQL.setString(1, nombreUsuarioBuscar);
+
+        // Ejecutar la consulta para obtener los resultados
+        ResultSet resultadoConsulta = consultarRegistroSQL.executeQuery();
+
+        // Verificar si hay resultados
+        if (resultadoConsulta.next()) {
+            // Si hay resultados, mostrarlos en los cuadros de texto
+            nombreCuadro.setText(resultadoConsulta.getString("nombre"));
+            fechaNacCuadro.setText(resultadoConsulta.getString("fecha_nac"));
+            notaCuadro.setText(resultadoConsulta.getString("nota"));
+            proyectoSelect.setSelectedItem(resultadoConsulta.getString("proyecto"));
+        } else {
+            // Si no hay resultados, limpiar los cuadros de texto
+            nombreCuadro.setText("");
+            fechaNacCuadro.setText("");
+            notaCuadro.setText("");
+            proyectoSelect.setSelectedItem(null);
+            System.out.println("No se encontró ningún registro con el nombre proporcionado");
+        }
+    } catch (SQLException ex) {
+        Logger.getLogger(RegistroCalificaciones.class.getName()).log(Level.SEVERE, null, ex);
+    } finally {
+        conexion.cerrarConexion();
+        System.out.println("Conexión cerrada");
+    }
+
+    }//GEN-LAST:event_buscarBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -269,12 +410,13 @@ public class RegistroCalificaciones extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton actualizarBtn;
     private javax.swing.JButton agregarBtn;
+    private javax.swing.JButton buscarBtn;
     private javax.swing.JLabel calificacion;
+    private javax.swing.JButton eliminarBtn;
     private javax.swing.JTextField fechaNacCuadro;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
