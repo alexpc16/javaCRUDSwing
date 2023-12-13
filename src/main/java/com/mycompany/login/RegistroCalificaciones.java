@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -35,43 +36,45 @@ public class RegistroCalificaciones extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        folio = new javax.swing.JTextField();
-        nombreAlumno = new javax.swing.JTextField();
-        nota = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        calificacion = new javax.swing.JLabel();
+        fechaNacCuadro = new javax.swing.JTextField();
+        nombreCuadro = new javax.swing.JTextField();
+        notaCuadro = new javax.swing.JTextField();
+        agregarBtn = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        proyectoSelect = new javax.swing.JComboBox<>();
 
         setTitle("Notas");
 
         jLabel1.setText("Nombre");
 
-        jLabel2.setText("Folio");
+        jLabel2.setText("Fecha Nac");
 
-        jLabel3.setText("Calificación");
+        calificacion.setText("Calificación");
 
-        folio.setColumns(10);
-        folio.addActionListener(new java.awt.event.ActionListener() {
+        fechaNacCuadro.setColumns(10);
+        fechaNacCuadro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                folioActionPerformed(evt);
+                fechaNacCuadroActionPerformed(evt);
             }
         });
 
-        nombreAlumno.setColumns(10);
+        nombreCuadro.setColumns(10);
 
-        nota.setColumns(10);
-        nota.addActionListener(new java.awt.event.ActionListener() {
+        notaCuadro.setColumns(10);
+        notaCuadro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                notaActionPerformed(evt);
+                notaCuadroActionPerformed(evt);
             }
         });
 
-        jButton1.setText("agregar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        agregarBtn.setText("agregar");
+        agregarBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                agregarBtnActionPerformed(evt);
             }
         });
 
@@ -85,6 +88,15 @@ public class RegistroCalificaciones extends javax.swing.JFrame {
         });
 
         jButton4.setText("actualizar");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("proyecto");
+
+        proyectoSelect.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "entregado", "no entregado" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -93,27 +105,29 @@ public class RegistroCalificaciones extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(agregarBtn)
+                    .addComponent(calificacion)
+                    .addComponent(jLabel3))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addGap(18, 18, 18)
+                        .addGap(38, 38, 38)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(notaCuadro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(fechaNacCuadro)
+                                .addComponent(nombreCuadro))
+                            .addComponent(proyectoSelect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
                         .addComponent(jButton2)
-                        .addGap(18, 18, 18)
+                        .addGap(29, 29, 29)
                         .addComponent(jButton3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton4))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(jLabel3))
-                        .addGap(44, 44, 44)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(nota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(folio)
-                                .addComponent(nombreAlumno)))))
-                .addContainerGap(24, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                        .addComponent(jButton4)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -121,43 +135,70 @@ public class RegistroCalificaciones extends javax.swing.JFrame {
                 .addGap(17, 17, 17)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(nombreAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(nombreCuadro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(folio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(fechaNacCuadro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(nota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(53, 53, 53)
+                    .addComponent(calificacion)
+                    .addComponent(notaCuadro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
+                    .addComponent(jLabel3)
+                    .addComponent(proyectoSelect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(44, 44, 44)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(agregarBtn)
                     .addComponent(jButton2)
                     .addComponent(jButton3)
                     .addComponent(jButton4))
-                .addContainerGap(90, Short.MAX_VALUE))
+                .addContainerGap(49, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void agregarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarBtnActionPerformed
         try {
             
-            Conexion conexion = new Conexion("Login");
+            Conexion conexion = new Conexion("proyFinalJava");
             Connection conexionRegistro = conexion.conectar();
             
-            String nombreUsuarioNuevo = nombreAlumno.getText();
-            String folioNuevo = folio.getText();
-            String notaNueva = nota.getText();
+            // accedemos a los cuadros de texto (jtextField) y usamos su metodo get para
+            // obtener el texto dentro de ellos que es lo que el usuario enviara
             
-            String agregarRegistroAlumno = "INSERT INTO alumnos (nombre, nota) VALUES (?,?);";
+            String nombreUsuarioNuevo = nombreCuadro.getText();
+            String fechaNacNueva = fechaNacCuadro.getText();
+            String notaNueva = notaCuadro.getText();
+            // el metodo getSelectItem retorna un Object que convertimos a String usando el casting
+            String proyectoNuevo = (String) proyectoSelect.getSelectedItem();
+            
+            // Creamos una consulta como String que servira para preparar la consulta a enviar a la 
+            // base de datos
+            
+            String agregarRegistroAlumno = "INSERT INTO alumnos (nombre, fecha_nac, nota, proyecto) VALUES (?,?,?,?);";
+            
+            // Realizamos la preparacion de la consulta, la cual contiene espacios en blanco
+            // dados por los simbolos de ?, estos datos seran llenados por los valores ingresados en los
+            // cuadros de texto
             
             PreparedStatement agregarRegistroSQL = conexionRegistro.prepareStatement(agregarRegistroAlumno);
             
+            // Cambiamos los simbolos de ? por datos a ingresar en la consulta, el numero indica la posicion del ? 
+            
             agregarRegistroSQL.setString(1,nombreUsuarioNuevo);
-            agregarRegistroSQL.setString(2,notaNueva);
+            agregarRegistroSQL.setString(2,fechaNacNueva);
+            // Convertimos notaNueva en entero para agregarlo a la consulta ya que en la base de datos 
+            // nota es de tipo entero
+            
+            
+            agregarRegistroSQL.setInt(3,Integer.parseInt(notaNueva));
+            agregarRegistroSQL.setString(4, proyectoNuevo);
+            
+            
+            
                        
             
             int filasInsertadas = agregarRegistroSQL.executeUpdate();
@@ -167,22 +208,30 @@ public class RegistroCalificaciones extends javax.swing.JFrame {
         
         
         
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_agregarBtnActionPerformed
 
-    private void folioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_folioActionPerformed
+    private void fechaNacCuadroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fechaNacCuadroActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_folioActionPerformed
+    }//GEN-LAST:event_fechaNacCuadroActionPerformed
 
-    private void notaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_notaActionPerformed
+    private void notaCuadroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_notaCuadroActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_notaActionPerformed
+    }//GEN-LAST:event_notaCuadroActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        nombreAlumno.setText("");
-        nota.setText("");
-        folio.setText("");
+        nombreCuadro.setText("");
+        notaCuadro.setText("");
+        fechaNacCuadro.setText("");
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+     
+       
+
+        
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -220,15 +269,17 @@ public class RegistroCalificaciones extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField folio;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton agregarBtn;
+    private javax.swing.JLabel calificacion;
+    private javax.swing.JTextField fechaNacCuadro;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JTextField nombreAlumno;
-    private javax.swing.JTextField nota;
+    private javax.swing.JTextField nombreCuadro;
+    private javax.swing.JTextField notaCuadro;
+    private javax.swing.JComboBox<String> proyectoSelect;
     // End of variables declaration//GEN-END:variables
 }
